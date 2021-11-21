@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "target": "ESNext",
+    "moduleResolution": "Node"
+  }
+}

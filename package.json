@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "lint": "eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.1",
+    "@types/seedrandom": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "parcel": "^2.0.1",
+    "prettier": "2.4.1"
+  },
+  "dependencies": {
+    "fast-simplex-noise": "^4.0.0",
+    "seedrandom": "^3.0.5"
+  }
+}
