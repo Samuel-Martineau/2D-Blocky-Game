@@ -1,12 +1,12 @@
-import { Camera } from './game/camera';
+import playerSprite from '../images/player.png';
+import { Entity } from './game/entity';
 import { Game } from './game/game';
-import { World } from './game/world';
-import { randomNoise } from './random';
-
-Camera.position.y = 35;
+import { Vector } from './utils/vector';
 
 const game = new Game();
-// game.addEntity(new Entity(Canvas.element.width / 2, Canvas.element.height / 2));
+const player = new Entity(game, 50, 70, 1.5, 3, playerSprite);
+game.camera.track(player);
+game.start();
 
 if (module.hot) {
   module.hot.accept(function () {
@@ -14,33 +14,25 @@ if (module.hot) {
   });
 }
 
-const speed = 0.5;
 window.onkeydown = function (e) {
-  switch (e.key) {
-    case 'ArrowUp':
-      Camera.position.y -= speed;
+  switch (e.code) {
+    case 'Space':
+      if (player.onGround) player.applyForce(new Vector(0, 1));
       break;
-    case 'ArrowDown':
-      Camera.position.y += speed;
+    case 'KeyA':
+      player.applyForce(new Vector(-1, 0));
       break;
-    case 'ArrowRight':
-      Camera.position.x += speed;
-      break;
-    case 'ArrowLeft':
-      Camera.position.x -= speed;
+    case 'KeyD':
+      player.applyForce(new Vector(1, 0));
       break;
   }
 };
-
-window.Camera = Camera;
 
 window.onclick = function (e) {
   console.log(
     game.world.screenToWorldCoordinates(e.offsetX, e.offsetY),
     game.world.blockAtCoordinates(
       ...game.world.screenToWorldCoordinates(e.offsetX, e.offsetY)
-    )
+    ).type.name
   );
 };
-
-window.noise = randomNoise;

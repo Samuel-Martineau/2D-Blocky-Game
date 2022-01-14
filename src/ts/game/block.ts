@@ -1,17 +1,18 @@
 import { Canvas } from '../canvas';
-
-export enum BlockType {
-  Air,
-  Dirt,
-}
+import { BlockType } from '../data/blocks';
 
 export class Block {
   static size = 32;
 
-  public constructor(public type: BlockType, public color?: string) {}
+  public constructor(public type: BlockType, public hue: number) {}
 
   public draw(x: number, y: number) {
-    if (this.type !== BlockType.Air)
-      Canvas.drawRectangle(x, y, Block.size + 1, Block.size + 1, this.color);
+    Canvas.drawRectangle(
+      x,
+      y,
+      Block.size,
+      Block.size,
+      this.type.color.rotate(this.hue).toString()
+    );
   }
 }

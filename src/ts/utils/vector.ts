@@ -1,12 +1,34 @@
+import { roundPrecision } from './math';
+
 export class Vector {
-  constructor(public x: number, public y: number) {}
+  private _x!: number;
+  private _y!: number;
+
+  constructor(x: number, y: number, private precision: number = 7) {
+    this.x = x;
+    this.y = y;
+  }
+
+  get x() {
+    return this._x;
+  }
+  set x(newValue: number) {
+    this._x = roundPrecision(newValue, this.precision);
+  }
+
+  get y() {
+    return this._y;
+  }
+  set y(newValue: number) {
+    this._y = roundPrecision(newValue, this.precision);
+  }
 
   get mag(): number {
     return Math.hypot(this.x, this.y);
   }
 
   get angle(): number {
-    return Math.atan(this.y / this.x);
+    return Math.atan2(this.y, this.x);
   }
 
   add(other: Vector): Vector {
@@ -21,6 +43,12 @@ export class Vector {
     return this;
   }
 
+  mult(factor: number): Vector {
+    this.x *= factor;
+    this.y *= factor;
+    return this;
+  }
+
   scale(targetMag: number): Vector {
     const k = targetMag / this.mag;
     this.x *= k;
@@ -28,8 +56,8 @@ export class Vector {
     return this;
   }
 
-  clone(): Vector {
-    return new Vector(this.x, this.y);
+  clone(precision = this.precision): Vector {
+    return new Vector(this.x, this.y, precision);
   }
 
   static add(a: Vector, b: Vector): Vector {
@@ -38,6 +66,10 @@ export class Vector {
 
   static sub(a: Vector, b: Vector): Vector {
     return a.clone().sub(b);
+  }
+
+  static mult(a: Vector, factor: number): Vector {
+    return a.clone().mult(factor);
   }
 
   static scale(a: Vector, mag: number): Vector {

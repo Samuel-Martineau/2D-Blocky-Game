@@ -82,6 +82,16 @@ export class Canvas {
     if (strokeWidth > 0) c.strokeRect(x, y, w, h);
     c.restore();
   }
+
+  static drawImage(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    image: HTMLImageElement
+  ) {
+    Canvas.context.drawImage(image, x, y, w, h);
+  }
 }
 
 Canvas.init();

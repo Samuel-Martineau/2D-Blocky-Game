@@ -6,13 +6,11 @@ import { Entity } from './entity';
 import { World } from './world';
 
 export class Game {
-  public world: World;
+  public world = new World(this);
+  public camera = new Camera();
   private entities: Entity[] = [];
-  private lastFrameTime!: number;
 
-  constructor() {
-    this.world = new World();
-    this.lastFrameTime = Date.now();
+  public start() {
     this.loop();
   }
 
@@ -24,16 +22,16 @@ export class Game {
   }
 
   private update() {
-    const ellapsedTime = (Date.now() - this.lastFrameTime) / 1000;
-    this.lastFrameTime = Date.now();
-
-    const gravity = new Vector(0, 10);
+    const gravity = new Vector(0, -0.1);
 
     for (const entity of this.entities) {
-      entity.update([gravity], ellapsedTime);
-    }
+      const friction = new Vector(entity.velocity.x, 0).mult(-0.15);
 
-    Camera.position.x += 0.5;
+      entity.applyForce(gravity);
+      entity.applyForce(friction);
+
+      entity.update();
+    }
   }
 
   private draw() {
@@ -42,14 +40,12 @@ export class Game {
     for (let x = 0; x < Canvas.width + Block.size; x += Block.size) {
       for (let y = 0; y < Canvas.height + Block.size; y += Block.size) {
         const [worldX, worldY] = this.world.screenToWorldCoordinates(x, y);
-        const block = this.world.blockAtCoordinates(worldX, worldY);
-        block.draw(
-          Math.floor((worldX - Camera.position.x) * Block.size),
-
-          Math.floor(
-            (World.height - 1 - worldY - Camera.position.y) * Block.size
-          )
+        const [screenX, screenY] = this.world.worldToScreenCoordinates(
+          worldX,
+          worldY
         );
+        const block = this.world.blockAtCoordinates(worldX, worldY);
+        block.draw(Math.floor(screenX), Math.floor(screenY));
       }
     }
 
