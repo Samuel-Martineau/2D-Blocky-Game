@@ -17,7 +17,7 @@ type BlockList = 'Unknown' | 'Air' | 'Dirt' | 'Grass';
 export const BlockTypes: { [key in BlockList]: BlockType } = {
   Unknown: {
     name: 'Inconnu',
-    color: new Color(300, 100, 25),
+    color: new Color(5, 10, 5),
     kind: BlockKind.Gaseous,
   },
   Air: {

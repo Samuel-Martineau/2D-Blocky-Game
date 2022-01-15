@@ -24,7 +24,7 @@ export class Entity {
   ) {
     game.addEntity(this);
 
-    this.position = new Vector(x, y);
+    this.position = new Vector(x, y, 2);
     this.velocity = new Vector(0, 0);
     this.acceleration = new Vector(0, 0);
 

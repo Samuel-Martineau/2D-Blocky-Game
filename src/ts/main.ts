@@ -14,7 +14,10 @@ if (module.hot) {
   });
 }
 
+let pressedKeys: string[] = [];
 window.onkeydown = function (e) {
+  if (pressedKeys.includes(e.code)) return;
+  pressedKeys.push(e.code);
   switch (e.code) {
     case 'Space':
       if (player.onGround) player.applyForce(new Vector(0, 1));
@@ -27,12 +30,13 @@ window.onkeydown = function (e) {
       break;
   }
 };
-
-window.onclick = function (e) {
-  console.log(
-    game.world.screenToWorldCoordinates(e.offsetX, e.offsetY),
-    game.world.blockAtCoordinates(
-      ...game.world.screenToWorldCoordinates(e.offsetX, e.offsetY)
-    ).type.name
-  );
+window.onkeyup = function (e) {
+  pressedKeys = pressedKeys.filter((c) => c !== e.code);
 };
+window.player = player;
+
+const instructionsDiv = document.querySelector('#instructions')!;
+const closeInstructionsButton = instructionsDiv.querySelector('button')!;
+closeInstructionsButton.addEventListener('click', () =>
+  instructionsDiv.classList.add('closed')
+);

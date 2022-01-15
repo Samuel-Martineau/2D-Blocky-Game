@@ -12,15 +12,6 @@ export class Camera {
     this.trackedEntity = entity;
   }
 
-  // public untrack() {
-  //   if (this.trackedEntity) {
-  //     this._position = this.trackedEntity.position
-  //       .clone(Camera.precision)
-  //       .add(Camera.offset);
-  //     this.trackedEntity = undefined;
-  //   }
-  // }
-
   get position() {
     const cameraWidth = Canvas.width / Block.size;
     const cameraHeight = Canvas.height / Block.size;

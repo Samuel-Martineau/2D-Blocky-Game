@@ -1,4 +1,5 @@
 import { BlockTypes } from '../data/blocks';
+import { randomNoise } from '../random';
 import { Block } from './block';
 import { Chunk } from './chunk';
 import { Game } from './game';
@@ -44,7 +45,7 @@ export class World {
 
     return (
       this.chunks[chunk]?.blocks?.[blockX]?.[worldY] ??
-      new Block(BlockTypes.Unknown, 0)
+      new Block(BlockTypes.Unknown, randomNoise(worldX, worldY) * 100)
     );
   }
 }
