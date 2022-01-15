@@ -10,6 +10,9 @@ export class Game {
   public camera = new Camera();
   private entities: Entity[] = [];
 
+  public frictionEnabled = true;
+  public gravityEnabled = true;
+
   public start() {
     this.loop();
   }
@@ -27,8 +30,8 @@ export class Game {
     for (const entity of this.entities) {
       const friction = new Vector(entity.velocity.x, 0).mult(-0.15);
 
-      entity.applyForce(gravity);
-      entity.applyForce(friction);
+      if (this.gravityEnabled) entity.applyForce(gravity);
+      if (this.frictionEnabled) entity.applyForce(friction);
 
       entity.update();
     }

@@ -49,7 +49,6 @@ export class Entity {
     if (this.velocity.mag === 0) return;
 
     const increment = 0.01;
-    const errorMargin = 0.05;
     for (let i = 0; i < this.velocity.mag; i += increment) {
       let partialVelocity = Vector.scale(this.velocity, increment);
       const possibleNewPosition = Vector.add(this.position, partialVelocity);
@@ -60,13 +59,10 @@ export class Entity {
           BlockKind.Gaseous;
 
       const canGoX = [
-        [possibleNewPosition.x, this.position.y - errorMargin],
-        [possibleNewPosition.x + this.width, this.position.y - errorMargin],
-        [possibleNewPosition.x, this.position.y - this.height + errorMargin],
-        [
-          possibleNewPosition.x + this.width,
-          this.position.y - this.height + errorMargin,
-        ],
+        [possibleNewPosition.x, this.position.y],
+        [possibleNewPosition.x + this.width, this.position.y],
+        [possibleNewPosition.x, this.position.y - this.height],
+        [possibleNewPosition.x + this.width, this.position.y - this.height],
       ].reduce(canGoReducer, true);
       const canGoY = [
         [this.position.x, possibleNewPosition.y],
